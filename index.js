@@ -46,7 +46,13 @@ async function generateSummaryImage(total, top5) {
   ctx.font = '18px Arial';
   let yPos = 210;
   for (const country of top5) {
-    const gdpString = country.estimated_gdp ? country.estimated_gdp.toFixed(0) : 'N/A';
+    const gdpNumber = parseFloat(country.estimated_gdp);
+    let gdpString = 'N/A';
+
+    if (!isNaN(gdpNumber) && country.estimated_gdp !== null) {
+        gdpString = gdpNumber.toFixed(0);
+    }
+
     ctx.fillText(`${country.name}: $${gdpString}`, 50, yPos);
     yPos += 30;
   }
